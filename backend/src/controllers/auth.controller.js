@@ -55,3 +55,56 @@ export const signup = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+// signin controller
+
+export const signin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    // trim email, password if they are strings
+    const newEmail =
+      typeof email === "string" ? email.trim().toLowerCase() : "";
+    const newPassword = typeof password === "string" ? password.trim() : "";
+    if (!newEmail || !newPassword) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    // check if user exists
+    const user = await User.findOne({ email: newEmail });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    // check if password is correct
+    const isMatch = await bcrypt.compare(newPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+    // generate token
+    generateToken(user._id, res);
+
+    return res.status(200).json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar,
+      status: user.status,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// logout controller
+export const logout = (_, res) => {
+  try {
+    res.cookie("jwt", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      maxAge: 0,
+    });
+    return res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
