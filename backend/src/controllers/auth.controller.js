@@ -1,3 +1,4 @@
+import cloudinary from "../../lib/cloudinary.js";
 import { generateToken } from "../../lib/generateToken.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
@@ -106,5 +107,32 @@ export const logout = (_, res) => {
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// update profile controller
+export const updateProfile = async (req, res) => {
+  try {
+    const { avatar } = req.body;
+    if (!avatar) {
+      return res.status(400).json({ message: "Avatar is required" });
+    }
+    const userId = req.user._id;
+
+    const uploadResponse = await cloudinary.uploader.upload(avatar, {
+      upload_preset: "chat_app",
+      folder: "chat_app",
+    });
+
+    const updatedUser = await User.findByIdAndUpdate(userId, {
+      avatar: uploadResponse.secure_url,
+    }).select("-password -__v");
+
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error.message);
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error - updateProfile" });
   }
 };
