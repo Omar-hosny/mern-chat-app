@@ -6,8 +6,12 @@ import {
   updateProfile,
 } from "../controllers/auth.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
+import { arcjetProtection } from "../middleware/arcjet.middleware.js";
 
 const router = express.Router();
+
+// apply arcjet protection to all routes RATE LIMITING AND BOT DETECTION
+router.use(arcjetProtection);
 
 router.post("/signup", signup);
 router.post("/signin", signin);
