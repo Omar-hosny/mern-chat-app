@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { ENV } from "../../lib/env.js";
+import { ENV } from "../lib/env.js";
 
 export const authMiddleware = async (req, res, next) => {
   try {

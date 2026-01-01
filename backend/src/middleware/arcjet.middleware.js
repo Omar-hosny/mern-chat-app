@@ -1,5 +1,5 @@
 import { isSpoofedBot } from "@arcjet/inspect";
-import aj from "../../lib/arcjet.js";
+import aj from "../lib/arcjet.js";
 
 /**
  * Middleware to protect routes using Arcjet.
