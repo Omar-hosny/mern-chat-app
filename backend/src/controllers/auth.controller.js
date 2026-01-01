@@ -1,5 +1,5 @@
-import cloudinary from "../../lib/cloudinary.js";
-import { generateToken } from "../../lib/generateToken.js";
+import cloudinary from "../lib/cloudinary.js";
+import { generateToken } from "../lib/generateToken.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 // signup controller
