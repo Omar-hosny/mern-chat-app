@@ -7,15 +7,21 @@ import messageRoutes from "./routes/messages.route.js";
 import { ENV } from "../src/lib/env.js";
 // database connection
 import { connectToDB } from "../src/lib/db.js";
-// arcjet
+import cors from "cors";
 
 const app = express();
 
 const PORT = ENV.PORT || 5000;
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // vite dev server
+    credentials: true,
+  })
+);
 
 app.use(express.json()); // parse incoming request body as JSON
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
