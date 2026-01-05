@@ -2,27 +2,52 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import PublicRoute from "../services/PublicRoute";
+import PrivateRoute from "../services/PrivateRoute";
 // import Layout from "../Layouts/Layout";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1 className="text-3xl text-red-500">Home Hi chat app</h1>,
+    element: (
+      <PrivateRoute>
+        <h1 className="text-3xl text-red-500">Home Hi chat app</h1>
+      </PrivateRoute>
+    ),
   },
   {
     path: "/chat/:id",
-    element: <h1 className="text-3xl text-red-500">Chat</h1>,
+    element: (
+      <PrivateRoute>
+        <h1 className="text-3xl text-red-500">Chat</h1>
+      </PrivateRoute>
+    ),
   },
   {
     path: "/profile/:id",
-    element: <h1 className="text-3xl text-red-500">Profile</h1>,
+    element: (
+      <PrivateRoute>
+        <h1 className="text-3xl text-red-500">Profile</h1>
+      </PrivateRoute>
+    ),
   },
 
-  { path: "/login", element: <LoginPage /> },
+  {
+    path: "/login",
+    element: (
+      <PublicRoute>
+        <LoginPage />
+      </PublicRoute>
+    ),
+  },
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: (
+      <PublicRoute>
+        <RegisterPage />
+      </PublicRoute>
+    ),
   },
 ]);
 
