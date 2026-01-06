@@ -4,6 +4,8 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import PublicRoute from "../services/PublicRoute";
 import PrivateRoute from "../services/PrivateRoute";
+import Layout from "../Layouts/Layout";
+import Home from "../pages/Home";
 // import Layout from "../Layouts/Layout";
 
 const queryClient = new QueryClient();
@@ -12,7 +14,9 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <PrivateRoute>
-        <h1 className="text-3xl text-red-500">Home Hi chat app</h1>
+        <Layout>
+          <Home />
+        </Layout>
       </PrivateRoute>
     ),
   },
@@ -54,9 +58,7 @@ const router = createBrowserRouter([
 const AppRouter = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <Layout> */}
       <RouterProvider router={router} />
-      {/* </Layout> */}
     </QueryClientProvider>
   );
 };

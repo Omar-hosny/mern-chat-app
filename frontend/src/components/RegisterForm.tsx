@@ -10,17 +10,19 @@ import {
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import useRegister from "../hooks/useRegister";
+import Header from "./Header";
 
 const RegisterForm = () => {
   const { register, onSubmit, errors, isLoading } = useRegister();
   return (
     <Card className="shadow-none border bg-white border-gray-200 text-gray-900">
       <CardHeader>
-        <CardTitle className="text-2xl text-gray-600 font-normal">
-          HiChat App Register page!
+        <Header />
+        <CardTitle className="text-3xl text-center text-gray-800 font-normal">
+          Create your account
         </CardTitle>
-        <CardDescription className="text-gray-500">
-          Create your account to start chatting..
+        <CardDescription className="text-center text-gray-500">
+          Join our community to start chatting..
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -78,7 +80,7 @@ const RegisterForm = () => {
             <Button
               disabled={isLoading}
               type="submit"
-              className="w-full max-w-sm rounded-full bg-gray-800 hover:bg-gray-700 text-white"
+              className="w-full max-w-sm rounded-full bg-sky-600 hover:bg-sky-700 text-white"
             >
               {isLoading ? "submitting... " : "Create Account"}
             </Button>
