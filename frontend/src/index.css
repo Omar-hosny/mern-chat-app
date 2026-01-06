@@ -1,4 +1,4 @@
 @import "tailwindcss";
 body {
-  @apply bg-rose-100;
+  @apply bg-gray-200;
 }
