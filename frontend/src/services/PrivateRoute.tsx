@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router";
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const user = localStorage.getItem("user");
-  console.log(user);
+  // console.log(JSON.parse(user!));
   if (!user) {
     return <Navigate to="/login" />;
   }
