@@ -8,10 +8,10 @@ export const generateToken = (userId, res) => {
   }
   const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: "7d" });
   res.cookie("jwt", token, {
-    httpOnly: true, // prevent XSS attacks
-    secure: true, // only send cookie over https
-    sameSite: "strict", // prevent CSRF attacks
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", //  https only in prod to secure cookies
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", //  works locally to prevent CSRF attacks
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   return token;

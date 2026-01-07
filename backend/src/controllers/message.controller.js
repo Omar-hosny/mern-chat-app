@@ -9,7 +9,9 @@ export const getAllContacts = async (req, res) => {
     if (!loggenInUser) {
       res.status(401).json({ message: "Unauthorized..." });
     }
-    const contacts = await User.find({ _id: { $ne: loggenInUser } });
+    const contacts = await User.find({ _id: { $ne: loggenInUser } }).select(
+      "-__v -password"
+    );
     res.status(200).json(contacts);
   } catch (error) {
     console.log("Internal server error ");
@@ -50,7 +52,7 @@ export const getChatPartners = async (req, res) => {
         partnersMap.set(partner._id.toString(), {
           _id: partner._id,
           name: partner.name,
-          avatar: partner.avatar,
+          avatar: partner.avatar ?? "",
           lastMessageAt: message.createdAt,
         });
       }
