@@ -6,7 +6,9 @@ import PublicRoute from "../services/PublicRoute";
 import PrivateRoute from "../services/PrivateRoute";
 import Layout from "../Layouts/Layout";
 import Home from "../pages/Home";
+import { Toaster } from "sonner";
 // import Layout from "../Layouts/Layout";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -59,6 +61,8 @@ const AppRouter = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <Toaster />
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 };

@@ -1,7 +1,8 @@
-import { LogOut } from "lucide-react";
 import SidebarHeader from "./SidebarHeader";
-import { Button } from "./ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import LogoutButton from "./LogoutButton";
+import Chats from "./Chats";
+import Contacts from "./Contacts";
 const Sidebar = () => {
   const tabTriggerClass =
     "w-full bg-blue-50 transition-colors hover:bg-gray-200 data-[state=active]:bg-gray-600 data-[state=active]:text-white";
@@ -19,19 +20,14 @@ const Sidebar = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="chats">
-          <div className="text-2xl  overflow-auto">Chats</div>
+          <Chats />
         </TabsContent>
         <TabsContent value="contacts">
-          <div className="text-2xl  overflow-auto">Contacts</div>
+          <Contacts />
         </TabsContent>
       </Tabs>
       <div className="p-2">
-        <Button
-          variant="ghost"
-          className="w-full rounded-2xl bg-gray-600 hover:bg-gray-700 text-white"
-        >
-          Logout <LogOut />
-        </Button>
+        <LogoutButton />
       </div>
     </aside>
   );
