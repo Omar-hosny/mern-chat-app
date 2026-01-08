@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { MessageItemType } from "../types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
@@ -8,22 +9,28 @@ const MessageItem = ({
   message: MessageItemType;
   currentUserId: string;
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
   // format createdAt to dd/mm/yyyy
   const messageDate = new Date(message.createdAt);
   const createdAt = messageDate.toLocaleString();
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [message]);
   return (
     <div
+      ref={ref}
       className={`flex items-center gap-2 p-2 rounded-2xl w-full ${
-        message.senderId._id === currentUserId
-          ? "justify-end "
-          : "justify-start "
+        message.senderId._id === currentUserId ? "justify-end" : "justify-start"
       }`}
     >
       <div
         className={`flex  flex-col gap-2 rounded-2xl p-2 w-fit text-white ${
           message.senderId._id === currentUserId
             ? "justify-end  bg-blue-600 rounded-br-none  "
-            : "justify-start bg-teal-700 rounded-bl-none "
+            : "justify-start bg-gray-400 rounded-bl-none "
         }`}
       >
         <div className="flex items-start gap-2">
@@ -34,7 +41,7 @@ const MessageItem = ({
             />
             <AvatarFallback>{message.senderId.name?.[0] || "U"}</AvatarFallback>
           </Avatar>
-          <p className="text-sm">{message.text}</p>
+          <p className="text-sm text-gray-100">{message.text}</p>
         </div>
         {message.image && (
           <img

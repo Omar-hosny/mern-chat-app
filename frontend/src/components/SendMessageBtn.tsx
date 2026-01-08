@@ -34,8 +34,8 @@ const SendMessageBtn = () => {
   return (
     <form
       onSubmit={handleSendMessage}
-      className="w-full max-w-[98%] relative gap-2 
-        h-16 bg-neutral-100  flex items-center justify-center rounded-2xl p-2"
+      className="w-full max-w-[98%] mb-2 relative gap-2 
+        h-16 bg-stone-200  z-10 flex items-center justify-center rounded-2xl p-2"
     >
       {image && (
         <div className="absolute bg-gray-200 rounded-b-2xl max-w-[300px] top-[-250px] left-auto">
@@ -61,7 +61,7 @@ const SendMessageBtn = () => {
       <Input
         ref={textRef}
         type="text"
-        className="ring-blue-400 focus:ring-blue-400 bg-white"
+        className="ring-0 focus:ring-0 text-gray-700 text-xl focus:ring-offset-0 border-0 focus:border-0 bg-white"
         placeholder="Send message..."
       />
       <Input

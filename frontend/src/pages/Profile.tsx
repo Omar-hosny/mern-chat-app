@@ -1,9 +1,10 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router";
+import ProfileContainer from "../components/ProfileContainer";
 
 const Profile = () => {
   return (
-    <div className="flex w-full flex-col items-center justify-center h-full">
+    <div className="flex w-full bg-rose-50 flex-col items-center justify-center h-full">
       <div
         className="flex w-full self-start justify-start h-18 items-center
        gap-2 bg-teal-500 p-3"
@@ -13,8 +14,9 @@ const Profile = () => {
           Back
         </Link>
       </div>
-      <div className="flex flex-col items-center justify-center h-full">
-        <h1 className="text-3xl">Profile</h1>
+      <div className="flex flex-col items-center justify-start h-full">
+        {/* profile container */}
+        <ProfileContainer />
       </div>
     </div>
   );
