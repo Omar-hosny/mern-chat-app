@@ -120,7 +120,6 @@ export const updateProfile = async (req, res) => {
     const userId = req.user._id;
 
     const uploadResponse = await cloudinary.uploader.upload(avatar, {
-      upload_preset: "chat_app",
       folder: "chat_app",
     });
 

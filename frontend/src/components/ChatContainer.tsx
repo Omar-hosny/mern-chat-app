@@ -9,7 +9,7 @@ import SendMessageBtn from "./SendMessageBtn";
 const ChatContainer = () => {
   const { data = [], isLoading, error } = useGetMessages();
 
-  const currentUserId = JSON.parse(localStorage.getItem("user") || "").id;
+  const currentUserId = JSON.parse(localStorage.getItem("user") || "")._id;
 
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
@@ -19,8 +19,8 @@ const ChatContainer = () => {
       {/* header */}
       {data?.length > 0 && (
         <div
-          className="w-full bg-slate-300 flex items-center justify-start border-b 
-        overflow-hidden border-gray-200  p-2"
+          className="w-full bg-teal-500 h-18 flex items-center justify-start border-b 
+        overflow-hidden border-gray-200  p-3"
         >
           <ChatHeader
             partner={{
@@ -33,7 +33,7 @@ const ChatContainer = () => {
       )}
       {/* messages */}
       {data?.length > 0 && (
-        <div className="flex-1 p-2 bg-gray-50  w-full flex  flex-col items-start ">
+        <div className="flex-1 p-2 bg-rose-50 w-full flex  flex-col items-start h-full overflow-y-auto ">
           {data.map((message) => (
             <MessageItem
               key={message._id}

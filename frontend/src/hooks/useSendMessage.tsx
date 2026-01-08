@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { api } from "../lib/axios.global";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface SendMessageData {
@@ -10,6 +10,8 @@ interface SendMessageData {
 
 const useSendMessage = () => {
   const { id } = useParams();
+
+  const queryClient = useQueryClient();
 
   const sendMessage = async (data: SendMessageData) => {
     if (!id) throw new Error("No receiver ID found");
@@ -22,6 +24,9 @@ const useSendMessage = () => {
     onSuccess: (data) => {
       // TODO: handle socket emit
       console.log("Message sent successfully:", data);
+      queryClient.invalidateQueries({
+        queryKey: ["messages", id],
+      });
     },
     onError: (error) => {
       console.error("Error sending message:", error);

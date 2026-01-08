@@ -8,7 +8,7 @@ const SidebarHeader = () => {
   return (
     <header
       className="flex items-center gap-2 p-2 border-b border-gray-200
-    bg-slate-100  rounded-tl-2xl"
+    bg-slate-200  rounded-tl-2xl"
     >
       <div className="w-12 h-12 flex items-center justify-center border border-gray-200 rounded-full">
         {isLoading ? (
@@ -24,7 +24,7 @@ const SidebarHeader = () => {
         )}
       </div>
       <div className="flex flex-col gap-0.5">
-        <Link to={`/profile/${user?._id}`}>
+        <Link to={`/profile/${user?._id}`} className="hover:text-gray-500">
           <h1 className="text-sm font-semibold">{user?.name || "User"}</h1>
         </Link>
         <p className="text-xs text-gray-500">Online</p>
