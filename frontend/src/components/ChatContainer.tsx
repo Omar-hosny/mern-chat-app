@@ -45,7 +45,9 @@ const ChatContainer = () => {
       )}
       {data?.length === 0 && <NoMessagesFound />}
       {/* input */}
-      <SendMessageBtn />
+      <>
+        <SendMessageBtn />
+      </>
     </section>
   );
 };

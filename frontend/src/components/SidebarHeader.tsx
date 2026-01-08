@@ -1,6 +1,7 @@
 import { LoaderCircle } from "lucide-react";
 import useAuth from "../hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Link } from "react-router";
 
 const SidebarHeader = () => {
   const { user, isLoading } = useAuth();
@@ -23,7 +24,9 @@ const SidebarHeader = () => {
         )}
       </div>
       <div className="flex flex-col gap-0.5">
-        <h1 className="text-sm font-semibold">{user?.name || "User"}</h1>
+        <Link to={`/profile/${user?._id}`}>
+          <h1 className="text-sm font-semibold">{user?.name || "User"}</h1>
+        </Link>
         <p className="text-xs text-gray-500">Online</p>
       </div>
     </header>

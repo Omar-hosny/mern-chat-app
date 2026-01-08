@@ -134,7 +134,7 @@ export const getChatByPartnerId = async (req, res) => {
     })
       .populate("senderId", "name avatar")
       .populate("receiverId", "name avatar")
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: 1 })
       .select("-__v");
     res.status(200).json(chat);
   } catch (error) {

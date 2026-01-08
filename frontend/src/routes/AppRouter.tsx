@@ -10,6 +10,7 @@ import { Toaster } from "sonner";
 // import Layout from "../Layouts/Layout";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ChatPage from "../pages/ChatPage";
+import Profile from "../pages/Profile";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -37,7 +38,9 @@ const router = createBrowserRouter([
     path: "/profile/:id",
     element: (
       <PrivateRoute>
-        <h1 className="text-3xl text-red-500">Profile</h1>
+        <Layout>
+          <Profile />
+        </Layout>
       </PrivateRoute>
     ),
   },

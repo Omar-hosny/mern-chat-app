@@ -34,15 +34,15 @@ const MessageItem = ({
             />
             <AvatarFallback>{message.senderId.name?.[0] || "U"}</AvatarFallback>
           </Avatar>
-          <p className="text-sm ">{message.text}</p>
+          <p className="text-sm">{message.text}</p>
         </div>
-        {/* {message.image && (
+        {message.image && (
           <img
             src={message.image}
-            alt=""
-            className="w-full h-40 object-cover"
+            alt="image"
+            className="w-full max-h-[300px] object-cover"
           />
-        )} */}
+        )}
         <span className="text-xs text-gray-200">{createdAt}</span>
       </div>
     </div>
