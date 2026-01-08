@@ -22,3 +22,13 @@ export type ContactItemType = {
   createdAt: string;
   updatedAt: string;
 };
+
+export interface MessageItemType {
+  _id: string;
+  senderId: { _id: string; name: string; avatar: string };
+  receiverId: { _id: string; name: string; avatar: string };
+  text: string;
+  image: string | null;
+  createdAt: string;
+  updatedAt: string;
+}

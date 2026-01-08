@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import { Toaster } from "sonner";
 // import Layout from "../Layouts/Layout";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ChatPage from "../pages/ChatPage";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -26,7 +27,9 @@ const router = createBrowserRouter([
     path: "/chat/:id",
     element: (
       <PrivateRoute>
-        <h1 className="text-3xl text-red-500">Chat</h1>
+        <Layout>
+          <ChatPage />
+        </Layout>
       </PrivateRoute>
     ),
   },
