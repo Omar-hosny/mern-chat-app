@@ -53,7 +53,7 @@ export const useAuthStore = create<AuthStore>()(
         }
 
         // 2. Reset everything.
-        // Don't worry about filtering; the server handles the list for others.
+        //note => update here we don't worry about filtering; the server handles the list for others.
         set({ socket: null, onlineUsers: [], authUser: null });
       },
     }),
