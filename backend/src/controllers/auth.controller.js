@@ -50,6 +50,7 @@ export const signup = async (req, res) => {
       email: savedUser.email,
       avatar: savedUser.avatar,
       status: savedUser.status,
+      createdAt: savedUser.createdAt,
     });
   } catch (error) {
     console.log(error.message);
@@ -88,6 +89,7 @@ export const signin = async (req, res) => {
       email: user.email,
       avatar: user.avatar,
       status: user.status,
+      createdAt: user.createdAt,
     });
   } catch (error) {
     console.log(error.message);

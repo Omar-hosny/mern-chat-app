@@ -11,6 +11,8 @@ import { Toaster } from "sonner";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ChatPage from "../pages/ChatPage";
 import Profile from "../pages/Profile";
+import { useAuthStore } from "../store/useAuthStore";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -64,6 +66,18 @@ const router = createBrowserRouter([
 ]);
 
 const AppRouter = () => {
+  // 1. Grab the state and actions from your store
+  const { authUser, connectSocket, disconnectSocket } = useAuthStore();
+
+  // 2. Add the listener here
+  useEffect(() => {
+    if (authUser) {
+      connectSocket();
+    } else {
+      // Ensures that if authUser is null (logout), the socket is killed
+      disconnectSocket();
+    }
+  }, [authUser, connectSocket, disconnectSocket]);
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />

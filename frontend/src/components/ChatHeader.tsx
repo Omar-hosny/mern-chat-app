@@ -1,3 +1,4 @@
+import { useAuthStore } from "../store/useAuthStore";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const ChatHeader = ({
@@ -9,7 +10,12 @@ const ChatHeader = ({
     avatar: string;
   };
 }) => {
+  const { onlineUsers } = useAuthStore();
+
   if (!partner) return null;
+  const isOnlineUser = onlineUsers?.includes(partner._id);
+  console.log(onlineUsers);
+
   return (
     <div
       className=" h-16 gap-2 flex items-start justify-center 
@@ -24,7 +30,9 @@ const ChatHeader = ({
       </Avatar>
       <div className="flex flex-col gap-0.5">
         <p className="font-semibold">{partner.name}</p>
-        <p className="text-xs text-gray-800">Online</p>
+        <p className="text-xs text-gray-800">
+          {isOnlineUser ? "Online" : "Offline"}
+        </p>
       </div>
     </div>
   );

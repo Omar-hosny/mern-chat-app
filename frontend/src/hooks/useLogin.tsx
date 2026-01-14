@@ -5,10 +5,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import handleErrorLogin from "../lib/handleErrorLogin";
-import handleSuccessLogin from "../lib/handleSuccessLogin";
+import { useAuthStore } from "../store/useAuthStore";
 
 const useLogin = () => {
   const navigate = useNavigate();
+  const { setAuthUser, connectSocket } = useAuthStore();
   // login mutation fn
   const onLogin = async (data: LoginSchemaType) => {
     const res = await api.post("/auth/signin", data);
@@ -29,7 +30,9 @@ const useLogin = () => {
   const loginMutation = useMutation({
     mutationFn: onLogin,
     onSuccess: (data) => {
-      handleSuccessLogin(data, navigate);
+      setAuthUser(data);
+      connectSocket();
+      navigate("/");
     },
     onError: (error) => {
       handleErrorLogin(error, setError);

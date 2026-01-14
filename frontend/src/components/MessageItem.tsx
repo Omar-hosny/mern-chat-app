@@ -1,14 +1,12 @@
 import { useEffect, useRef } from "react";
 import type { MessageItemType } from "../types";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useAuthStore } from "../store/useAuthStore";
 
-const MessageItem = ({
-  message,
-  currentUserId,
-}: {
-  message: MessageItemType;
-  currentUserId: string;
-}) => {
+const MessageItem = ({ message }: { message: MessageItemType }) => {
+  const { authUser } = useAuthStore();
+  console.log(authUser);
+  const currentUserId = authUser?.id || "";
   const ref = useRef<HTMLDivElement>(null);
   // format createdAt to dd/mm/yyyy
   const messageDate = new Date(message.createdAt);

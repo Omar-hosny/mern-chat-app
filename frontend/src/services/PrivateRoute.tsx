@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from "react-router";
+import { useAuthStore } from "../store/useAuthStore";
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const user = localStorage.getItem("user");
+  const { authUser } = useAuthStore();
   // console.log(JSON.parse(user!));
-  if (!user) {
+  if (!authUser) {
     return <Navigate to="/login" />;
   }
   return (

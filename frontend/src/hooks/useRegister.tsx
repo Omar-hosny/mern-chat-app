@@ -8,10 +8,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import handleErrorLogin from "../lib/handleErrorLogin";
-import handleSuccessLogin from "../lib/handleSuccessLogin";
+import { useAuthStore } from "../store/useAuthStore";
 
 const useRegister = () => {
   const navigate = useNavigate();
+  const { setAuthUser, connectSocket } = useAuthStore();
   // login mutation fn
   const onRegister = async (data: RegisterSchemaType) => {
     const res = await api.post("/auth/signup", data);
@@ -32,7 +33,9 @@ const useRegister = () => {
   const registerMutation = useMutation({
     mutationFn: onRegister,
     onSuccess: (data) => {
-      handleSuccessLogin(data, navigate);
+      setAuthUser(data.user);
+      connectSocket();
+      navigate("/");
     },
     onError: (error) => {
       handleErrorLogin(error, setError);

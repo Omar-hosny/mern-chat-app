@@ -1,4 +1,3 @@
-import express from "express";
 import cookieParser from "cookie-parser";
 // routes
 import authRoutes from "./routes/auth.route.js";
@@ -8,8 +7,8 @@ import { ENV } from "../src/lib/env.js";
 // database connection
 import { connectToDB } from "../src/lib/db.js";
 import cors from "cors";
-
-const app = express();
+import express from "express";
+import { app, server } from "./lib/socket.js";
 
 const PORT = ENV.PORT || 5000;
 app.use(cookieParser());
@@ -26,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   connectToDB();
 });

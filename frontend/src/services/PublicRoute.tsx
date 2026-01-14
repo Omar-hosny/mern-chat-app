@@ -1,8 +1,10 @@
 import { Navigate, Outlet } from "react-router";
+import { useAuthStore } from "../store/useAuthStore";
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const user = localStorage.getItem("user");
-  if (user) {
+  const { authUser } = useAuthStore();
+
+  if (authUser) {
     return <Navigate to="/" />;
   }
   return (
