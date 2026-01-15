@@ -9,7 +9,7 @@ import { useAuthStore } from "../store/useAuthStore";
 
 const useLogin = () => {
   const navigate = useNavigate();
-  const { setAuthUser, connectSocket } = useAuthStore();
+  const { setAuthUser } = useAuthStore();
   // login mutation fn
   const onLogin = async (data: LoginSchemaType) => {
     const res = await api.post("/auth/signin", data);
@@ -31,7 +31,7 @@ const useLogin = () => {
     mutationFn: onLogin,
     onSuccess: (data) => {
       setAuthUser(data);
-      connectSocket();
+
       navigate("/");
     },
     onError: (error) => {

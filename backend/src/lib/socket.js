@@ -17,6 +17,11 @@ io.use(socketAuthMiddleware);
 
 const userSocketMap = new Map(); // { userId => socketId }
 
+// Helper function to get a specific user's socket ID
+export const getReceiverSocketId = (receiverId) => {
+  return userSocketMap.get(receiverId);
+};
+
 io.on("connection", (socket) => {
   // Ensure your middleware sets this, or fallback to query
   const userId = socket.userId || socket.handshake.query.userId;

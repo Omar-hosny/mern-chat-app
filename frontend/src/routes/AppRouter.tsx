@@ -69,15 +69,23 @@ const AppRouter = () => {
   // 1. Grab the state and actions from your store
   const { authUser, connectSocket, disconnectSocket } = useAuthStore();
 
-  // 2. Add the listener here
   useEffect(() => {
+    // If we have a user, attempt to connect
     if (authUser) {
       connectSocket();
-    } else {
-      // Ensures that if authUser is null (logout), the socket is killed
-      disconnectSocket();
     }
-  }, [authUser, connectSocket, disconnectSocket]);
+
+    // CLEANUP FUNCTION: This is critical.
+    // When the component unmounts or authUser changes,
+    // we want to ensure the previous socket is closed.
+    return () => {
+      // We only call disconnect if authUser becomes null
+      // or during a hard refresh/unmount.
+      if (!authUser) {
+        disconnectSocket();
+      }
+    };
+  }, [authUser]);
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />

@@ -12,7 +12,7 @@ import { useAuthStore } from "../store/useAuthStore";
 
 const useRegister = () => {
   const navigate = useNavigate();
-  const { setAuthUser, connectSocket } = useAuthStore();
+  const { setAuthUser } = useAuthStore();
   // login mutation fn
   const onRegister = async (data: RegisterSchemaType) => {
     const res = await api.post("/auth/signup", data);
@@ -34,7 +34,6 @@ const useRegister = () => {
     mutationFn: onRegister,
     onSuccess: (data) => {
       setAuthUser(data.user);
-      connectSocket();
       navigate("/");
     },
     onError: (error) => {

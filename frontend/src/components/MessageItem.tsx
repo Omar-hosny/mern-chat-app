@@ -5,8 +5,8 @@ import { useAuthStore } from "../store/useAuthStore";
 
 const MessageItem = ({ message }: { message: MessageItemType }) => {
   const { authUser } = useAuthStore();
-  console.log(authUser);
-  const currentUserId = authUser?.id || "";
+  // console.log(authUser);
+  const currentUserId = authUser?.id;
   const ref = useRef<HTMLDivElement>(null);
   // format createdAt to dd/mm/yyyy
   const messageDate = new Date(message.createdAt);

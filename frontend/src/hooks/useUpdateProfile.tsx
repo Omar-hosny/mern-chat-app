@@ -2,9 +2,11 @@ import { api } from "../lib/axios.global";
 import { toast } from "sonner";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuthStore } from "../store/useAuthStore";
 
 const useUpdateProfile = () => {
   const queryClient = useQueryClient();
+  const { setAuthUser } = useAuthStore();
   const updateProfile = async (avatar: string) => {
     const res = await api.put(`/auth/update-profile`, { avatar });
     return res.data;
@@ -14,7 +16,7 @@ const useUpdateProfile = () => {
     mutationFn: updateProfile,
     onSuccess: (data) => {
       toast.success("Profile updated successfully");
-      localStorage.setItem("user", JSON.stringify(data));
+      setAuthUser(data);
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
     onError: (error: any) => {
