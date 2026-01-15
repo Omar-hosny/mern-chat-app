@@ -5,10 +5,19 @@ import ChatHeader from "./ChatHeader";
 import Loading from "./Loading";
 import NoMessagesFound from "./NoMessagesFound";
 import SendMessageBtn from "./SendMessageBtn";
+import useMessagesListener from "../hooks/useMessagesListener";
+import { useParams } from "react-router";
+import { useAuthStore } from "../store/useAuthStore";
 
 const ChatContainer = () => {
+  const { id } = useParams();
+  const { authUser } = useAuthStore();
   const { data = [], isLoading, error } = useGetMessages();
-
+  const partner =
+    authUser?.id === data?.[0]?.receiverId?._id
+      ? data?.[0]?.senderId
+      : data?.[0]?.receiverId;
+  useMessagesListener(id || "");
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -20,13 +29,7 @@ const ChatContainer = () => {
           className="w-full bg-teal-500 h-18 flex items-center justify-start border-b 
         overflow-hidden border-gray-200  p-3"
         >
-          <ChatHeader
-            partner={{
-              _id: data?.[0].receiverId?._id || "",
-              name: data?.[0].receiverId?.name || "",
-              avatar: data?.[0].receiverId?.avatar || "",
-            }}
-          />
+          <ChatHeader partner={partner} />
         </div>
       )}
       {/* messages */}

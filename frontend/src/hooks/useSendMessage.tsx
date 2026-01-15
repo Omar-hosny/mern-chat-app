@@ -1,4 +1,3 @@
-import { useParams } from "react-router";
 import { api } from "../lib/axios.global";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -8,28 +7,26 @@ interface SendMessageData {
   image?: string;
 }
 
-const useSendMessage = () => {
-  const { id } = useParams();
-
+const useSendMessage = (receiverId: string) => {
   const queryClient = useQueryClient();
 
   const sendMessage = async (data: SendMessageData) => {
-    if (!id) throw new Error("No receiver ID found");
-    const res = await api.post(`/messages/send/${id}`, data);
+    if (!receiverId) throw new Error("No receiver ID found");
+    const res = await api.post(`/messages/send/${receiverId}`, data);
     return res.data;
   };
 
   const sendMessageMutation = useMutation({
     mutationFn: sendMessage,
-    onSuccess: (data) => {
-      // TODO: handle socket emit
-      console.log("Message sent successfully:", data);
-      queryClient.invalidateQueries({
-        queryKey: ["messages", id],
+    onSuccess: (newMessage) => {
+      // Manually append the new message to the existing query cache without invalidating the query
+      queryClient.setQueryData(["messages", receiverId], (oldMessages: any) => {
+        // if oldMessages is not null or undefined, return the new array otherwise return the new message
+        return oldMessages ? [...oldMessages, newMessage] : [newMessage];
       });
+      console.log(newMessage);
     },
-    onError: (error) => {
-      console.error("Error sending message:", error);
+    onError: () => {
       toast.error("Failed to send message");
     },
   });

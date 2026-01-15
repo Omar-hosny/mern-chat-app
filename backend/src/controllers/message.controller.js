@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import Message from "../models/Message.js";
 import cloudinary from "../lib/cloudinary.js";
-
+import { getReceiverSocketId, io } from "../lib/socket.js";
 // get all contacts controller
 export const getAllContacts = async (req, res) => {
   try {
@@ -75,17 +75,21 @@ export const sendMessage = async (req, res) => {
     }
     const receiverId = req.params.id;
     const { text, image } = req.body;
+
     if (!receiverId) {
       res.status(400).json({ message: "Bad request missing receiverId..." });
     }
+
     if (!text && !image) {
       res.status(400).json({ message: "Bad request missing text or image..." });
     }
+
     // check if receiver exists
     const receiver = await User.findById(receiverId);
     if (!receiver) {
       res.status(404).json({ message: "Receiver not found..." });
     }
+
     // check if receiver is loggedInUser
     if (receiver._id.toString() === loggedInUser.toString()) {
       res
@@ -108,7 +112,21 @@ export const sendMessage = async (req, res) => {
       text,
       image: imageUrl,
     });
-    res.status(200).json(message);
+
+    // 4. Populate name and avatar of senderId and receiverId
+    const populatedMessage = await message.populate([
+      { path: "senderId", select: "name avatar" },
+      { path: "receiverId", select: "name avatar" },
+    ]);
+
+    // --- REAL-TIME LOGIC ---
+    const receiverSocketId = getReceiverSocketId(receiverId);
+
+    if (receiverSocketId) {
+      // io.to(socketId).emit() sends only to that specific user
+      io.to(receiverSocketId).emit("new-message", populatedMessage);
+    }
+    res.status(200).json(populatedMessage);
   } catch (error) {
     console.log("Internal server error ");
     res.status(500).json({ message: "Internal server error" });
@@ -132,8 +150,8 @@ export const getChatByPartnerId = async (req, res) => {
         { senderId: partnerId, receiverId: loggedInUser },
       ],
     })
-      .populate("senderId", "name avatar")
-      .populate("receiverId", "name avatar")
+      .populate("senderId", "name avatar _id")
+      .populate("receiverId", "name avatar _id")
       .sort({ createdAt: 1 })
       .select("-__v");
     res.status(200).json(chat);

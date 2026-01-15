@@ -6,7 +6,7 @@ import { useAuthStore } from "../store/useAuthStore";
 
 const useLogout = () => {
   const navigate = useNavigate();
-  const { setAuthUser } = useAuthStore();
+  const { setAuthUser, disconnectSocket } = useAuthStore();
   const queryClient = useQueryClient(); // get queryClient
   const logout = async () => {
     const res = await api.post("/auth/logout");
@@ -17,8 +17,8 @@ const useLogout = () => {
     mutationFn: logout,
     onSuccess: () => {
       setAuthUser(null);
+      disconnectSocket();
       queryClient.clear(); // clear all queries
-      // disconnectSocket();
       navigate("/login");
       toast.success("logout successfully");
     },

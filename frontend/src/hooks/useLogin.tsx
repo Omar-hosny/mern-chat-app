@@ -31,7 +31,6 @@ const useLogin = () => {
     mutationFn: onLogin,
     onSuccess: (data) => {
       setAuthUser(data);
-
       navigate("/");
     },
     onError: (error) => {

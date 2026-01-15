@@ -3,9 +3,11 @@ import useSendMessage from "../hooks/useSendMessage";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Loader2, Paperclip, Send, X } from "lucide-react";
+import { useParams } from "react-router";
 
 const SendMessageBtn = () => {
-  const { onSendMessage, isLoading } = useSendMessage();
+  const { id } = useParams();
+  const { onSendMessage, isLoading } = useSendMessage(id || "");
   const textRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string | null>(null);

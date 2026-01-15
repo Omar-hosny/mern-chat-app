@@ -67,7 +67,7 @@ export const useAuthStore = create<AuthStore>()(
           socket.disconnect();
         }
 
-        set({ socket: null, onlineUsers: [], authUser: null });
+        set({ socket: null, onlineUsers: [] });
       },
     }),
     {

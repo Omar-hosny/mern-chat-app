@@ -14,7 +14,6 @@ const ChatHeader = ({
 
   if (!partner) return null;
   const isOnlineUser = onlineUsers?.includes(partner._id);
-  console.log(onlineUsers);
 
   return (
     <div
