@@ -12,6 +12,7 @@ A full-stack real-time chat application built using the MERN stack (MongoDB, Exp
 - **Data Fetching**: Optimistic updates and caching with TanStack Query.
 - **Security**: Route protection and security features powered by Arcjet.
 - **Theming**: Dark/Light mode support.
+  
 
 ## 🛠️ Technology Stack
 
@@ -39,6 +40,7 @@ A full-stack real-time chat application built using the MERN stack (MongoDB, Exp
 - **Security**: [Arcjet](https://arcjet.com/) (Bot detection, rate limiting, etc.)
 - **Image Storage**: [Cloudinary](https://cloudinary.com/)
 - **CORS**: Cross-Origin Resource Sharing enabled
+- Rate limiter support
 
 ## 📦 Getting Started
 
